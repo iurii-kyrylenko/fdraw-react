@@ -1,17 +1,22 @@
 import React from 'react'
 import './FTools.css'
 
-const FTools = (props) => {
+const FTools = ({ width, height, change }) => {
+  const handleChange = (e) => {
+    const key = e.target.name
+    const value = e.target.value
+    change({ [key]: value })
+  }
   return (
     <div className="ftools">
       <div className="container">
         <div className="control">
           <label htmlFor="width">Width</label>       
-          <input id="width" type="text" />
+          <input id="width" type="text" name="width" value={ width } onChange={ handleChange } />
         </div>
         <div className="control">
           <label htmlFor="height">Height</label>       
-          <input id="height" type="text" />
+          <input id="height" type="text" name="height" value={ height } onChange={ handleChange } />
         </div>
         <div className="control">
           <label htmlFor="resolution">Resolution</label>       

@@ -5,6 +5,19 @@ import FDraw from '../../fdraw/components/FDraw'
 import FTools from '../FTools/FTools'
 
 class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      width: 320,
+      height: 300
+    }
+    this.changeHandler = this.changeHandler.bind(this)
+  }
+
+  changeHandler (e) {
+    this.setState(e)
+  }
+
   render() {
     return (
       <div>
@@ -15,8 +28,15 @@ class App extends Component {
           </h2>
         </div>
         <div className="App-body">
-          <div className="vspan-after"><FTools /></div>
-          <FDraw width="400" height="250"></FDraw>
+          <div className="vspan-after">
+            <FTools width={ this.state.width }
+                    height={ this.state.height }
+                    change={ this.changeHandler }
+            />
+          </div>
+          <FDraw width={ this.state.width }
+                 height={ this.state.height }
+          />
         </div>
       </div>
     )
