@@ -9,9 +9,9 @@ class App extends Component {
     super()
     this.state = {
       tools: {
-        width: { value: 320, err: false },
-        height: { value: 200, err: false },
-        resolution: { value: 300, err: false },
+        width: { value: '320', err: false },
+        height: { value: '200', err: false },
+        resolution: { value: '300', err: false },
       },
       draw: {
         width: 320,
@@ -25,17 +25,15 @@ class App extends Component {
 
   get diff () {
     const s = this.state
-    // !!! values in tools are string
-    console.log(s)
     return (
-      s.tools.width.value != s.draw.width ||
-      s.tools.height.value != s.draw.height ||
-      s.tools.resolution.value != s.draw.resolution
+      s.tools.width.value !== s.draw.width.toString() ||
+      s.tools.height.value !== s.draw.height.toString() ||
+      s.tools.resolution.value !== s.draw.resolution.toString()
     )
   }
 
   handleChange (e) {
-    const error = isNaN(e.value) || e.value < 1 || e.value > 100000
+    const error = !e.value.match(/^[1-9][0-9]*$/) || (e.value > 10000)
     this.setState(s => {
       s.tools = { ...s.tools, [e.key]: { value: e.value, error } }
     })
@@ -44,9 +42,9 @@ class App extends Component {
   handleSubmit () {
     this.setState(s => {
       s.draw = {
-        width: s.tools.width.value,
-        height: s.tools.height.value,
-        resolution: s.tools.resolution.value
+        width: parseInt(s.tools.width.value, 10),
+        height: parseInt(s.tools.height.value, 10),
+        resolution: parseInt(s.tools.resolution.value, 10)
       }
     })
   }

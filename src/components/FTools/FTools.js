@@ -18,7 +18,6 @@ const isFormInvalid = (width, height, resolution) =>
   (width.error || height.error || resolution.error)
 
 const FTools = ({ width, height, resolution, diff, change, submit }) => {
-  console.log('diff:', diff)
   return (
     <div className="ftools">
       <form className="container" onSubmit={ handleSubmit(submit) }>
