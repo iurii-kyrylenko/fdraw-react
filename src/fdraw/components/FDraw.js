@@ -20,7 +20,7 @@ class FDraw extends React.Component {
     this.fworker.onmessage = (e) => {
       console.log('from worker:', e.data)
     }
-    this.fworker.postMessage({ test: 'message' })
+    // this.fworker.postMessage({ test: 'message' })
   }
 
   componentWillUnmount () {

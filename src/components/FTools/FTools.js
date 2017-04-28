@@ -1,26 +1,41 @@
 import React from 'react'
 import './FTools.css'
 
-const FTools = ({ width, height, change }) => {
-  const handleChange = (e) => {
-    const key = e.target.name
-    const value = e.target.value
-    change({ [key]: value })
-  }
+const handleChange = change => e => {
+  const key = e.target.name
+  const value = e.target.value
+  change({ key, value })
+}
+
+const handleSubmit = submit => e => {
+  e.preventDefault()
+  submit()
+}
+
+const controlClass = prop => 'control' + (prop.error ? ' error' : '')
+
+const isFormInvalid = (width, height, resolution) =>
+  (width.error || height.error || resolution.error)
+
+const FTools = ({ width, height, resolution, diff, change, submit }) => {
+  console.log('diff:', diff)
   return (
     <div className="ftools">
-      <div className="container">
-        <div className="control">
+      <form className="container" onSubmit={ handleSubmit(submit) }>
+        <div className={ controlClass(width) }>
           <label htmlFor="width">Width</label>       
-          <input id="width" type="text" name="width" value={ width } onChange={ handleChange } />
+          <input id="width" type="text" name="width"
+                 value={ width.value } onChange={ handleChange(change) } />
         </div>
-        <div className="control">
+        <div className={ controlClass(height) }>
           <label htmlFor="height">Height</label>       
-          <input id="height" type="text" name="height" value={ height } onChange={ handleChange } />
+          <input id="height" type="text" name="height"
+                 value={ height.value } onChange={ handleChange(change) } />
         </div>
-        <div className="control">
+        <div className={ controlClass(resolution) }>
           <label htmlFor="resolution">Resolution</label>       
-          <input id="resolution" type="text" />
+          <input id="resolution" type="text" name="resolution"
+                 value={ resolution.value } onChange={ handleChange(change) } />
         </div>
         <div className="control">
           <label htmlFor="palette">Palette</label>       
@@ -29,7 +44,7 @@ const FTools = ({ width, height, change }) => {
             <option>rainbow</option>
           </select>
         </div>
-        <div className="control">
+       <div className="control">
           <label>Status</label>
           <div className="info">
             <div>Ready</div>
@@ -50,7 +65,12 @@ const FTools = ({ width, height, change }) => {
             <div>zoom: + - / pinch</div>
           </div>
         </div>
-      </div>
+        { isFormInvalid(width, height, resolution) || !diff || (
+          <div className="control">
+            <button type="submit">Submit</button>
+          </div>
+        )}
+      </form>
     </div>
   )
 }

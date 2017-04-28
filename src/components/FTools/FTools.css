@@ -27,3 +27,10 @@
   font-family: monospace;
   font-size: 0.7em;
 }
+.error input {
+  border: 1px solid #f00;
+  outline: none;
+}
+.error label {
+  color: #f00;
+}
