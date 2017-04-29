@@ -5,6 +5,13 @@ import FDraw from '../../fdraw/components/FDraw'
 import FTools from '../FTools/FTools'
 import getColor from '../../fdraw/services/getColor'
 
+const palettes = [
+  { id: 'bw', name: 'b & w' },
+  { id: 'wb', name: 'w & b' },
+  { id: 'rb', name: 'rainbow' },
+  { id: 'wk', name: 'wiki' }
+]
+
 class App extends Component {
   constructor () {
     super()
@@ -12,17 +19,17 @@ class App extends Component {
       tools: {
         width: { value: '320', err: false },
         height: { value: '200', err: false },
-        resolution: { value: '300', err: false },
+        resolution: { value: '200', err: false },
+        palette: 'bw'
       },
       draw: {
-        width: 320,
-        height: 200,
-        resolution: 300
+        width: 1,
+        height: 1,
+        resolution: 1,
+        palette: getColor.bw
       },
       progress: false,
-      position: {
-        x: 123, y: 456, zoom: 789
-      }
+      position: { x: 0, y: 0, zoom: 1 }
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,11 +42,18 @@ class App extends Component {
     return (
       s.tools.width.value !== s.draw.width.toString() ||
       s.tools.height.value !== s.draw.height.toString() ||
-      s.tools.resolution.value !== s.draw.resolution.toString()
+      s.tools.resolution.value !== s.draw.resolution.toString() ||
+      JSON.stringify(getColor[s.tools.palette]) !== JSON.stringify(s.draw.palette)
     )
   }
 
   handleChange (e) {
+    if(e.key === 'palette') {
+      this.setState(s => {
+        s.tools = { ...s.tools, [e.key]: e.value }
+      })
+      return
+    }
     const error = !e.value.match(/^[1-9][0-9]*$/) || (e.value > 10000)
     this.setState(s => {
       s.tools = { ...s.tools, [e.key]: { value: e.value, error } }
@@ -51,7 +65,8 @@ class App extends Component {
       s.draw = {
         width: parseInt(s.tools.width.value, 10),
         height: parseInt(s.tools.height.value, 10),
-        resolution: parseInt(s.tools.resolution.value, 10)
+        resolution: parseInt(s.tools.resolution.value, 10),
+        palette: getColor[s.tools.palette]
       }
     })
   }
@@ -62,6 +77,10 @@ class App extends Component {
 
   handleChangePosition (e) {
     this.setState({ position: e })
+  }
+
+  componentWillMount () {
+    this.handleSubmit()
   }
 
   render() {
@@ -78,6 +97,8 @@ class App extends Component {
             <FTools width={ this.state.tools.width }
                     height={ this.state.tools.height }
                     resolution={ this.state.tools.resolution }
+                    palettes={ palettes }
+                    palette={ this.state.tools.palette }
                     progress={ this.state.progress }
                     position={ this.state.position }
                     diff={ this.diff }
@@ -87,14 +108,14 @@ class App extends Component {
           <FDraw width={ this.state.draw.width }
                  height={ this.state.draw.height }
                  resolution={ this.state.draw.resolution }
-                 palette={ getColor.wk }
+                 palette={ this.state.draw.palette }
                  defaultValue={{ zoom: 80 }}
                  progress={ this.handleProgress }
                  changePosition={ this.handleChangePosition } />
           <FDraw width={ 200 }
                  height={ 200 }
                  resolution={ 100 }
-                 palette={ getColor.wk } />
+                 defaultValue={{ x: 0.4025, y: 0.1948, zoom: 266020 }} palette={ getColor.wk } />
         </div>
       </div>
     )

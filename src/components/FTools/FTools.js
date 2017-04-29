@@ -17,7 +17,7 @@ const controlClass = prop => 'control' + (prop.error ? ' error' : '')
 const isFormInvalid = (width, height, resolution) =>
   (width.error || height.error || resolution.error)
 
-const FTools = ({ width, height, resolution, progress, position, diff, change, submit }) => {
+const FTools = ({ palettes, width, height, resolution, palette, progress, position, diff, change, submit }) => {
   return (
     <div className="ftools">
       <form className="container" onSubmit={ handleSubmit(submit) }>
@@ -38,9 +38,8 @@ const FTools = ({ width, height, resolution, progress, position, diff, change, s
         </div>
         <div className="control">
           <label htmlFor="palette">Palette</label>       
-          <select id="palette">
-            <option>b&amp;w</option>
-            <option>rainbow</option>
+          <select id="palette" name="palette" value={ palette } onChange={ handleChange(change) }>
+            { palettes.map(p => (<option key={ p.id } value={ p.id }>{ p.name }</option>)) }
           </select>
         </div>
        <div className="control">
