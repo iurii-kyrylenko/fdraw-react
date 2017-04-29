@@ -27,6 +27,9 @@
   font-family: monospace;
   font-size: 0.7em;
 }
+.control .status {
+  width: 32px;
+}
 .error input {
   border: 1px solid #f00;
   outline: none;

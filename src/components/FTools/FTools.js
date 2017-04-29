@@ -17,7 +17,7 @@ const controlClass = prop => 'control' + (prop.error ? ' error' : '')
 const isFormInvalid = (width, height, resolution) =>
   (width.error || height.error || resolution.error)
 
-const FTools = ({ width, height, resolution, diff, change, submit }) => {
+const FTools = ({ width, height, resolution, progress, position, diff, change, submit }) => {
   return (
     <div className="ftools">
       <form className="container" onSubmit={ handleSubmit(submit) }>
@@ -45,16 +45,8 @@ const FTools = ({ width, height, resolution, diff, change, submit }) => {
         </div>
        <div className="control">
           <label>Status</label>
-          <div className="info">
-            <div>Ready</div>
-          </div>
-        </div>
-        <div className="control">
-          <label>Position</label>
-          <div className="info">
-            <div>x: 123</div>
-            <div>y: 456</div>
-            <div>zoom: 789</div>
+          <div className="info status">
+            <div>{ progress ? 'Progress' : 'Ready' }</div>
           </div>
         </div>
         <div className="control">
@@ -62,6 +54,14 @@ const FTools = ({ width, height, resolution, diff, change, submit }) => {
           <div className="info">
             <div>move: click/touch &amp; drag</div>
             <div>zoom: + - / pinch</div>
+          </div>
+        </div>
+        <div className="control">
+          <label>Position</label>
+          <div className="info">
+            <div>x: { position.x }</div>
+            <div>y: { position.y }</div>
+            <div>zoom: { position.zoom }</div>
           </div>
         </div>
         { isFormInvalid(width, height, resolution) || !diff || (

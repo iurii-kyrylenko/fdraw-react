@@ -3,6 +3,7 @@ import logo from './logo.svg'
 import './App.css'
 import FDraw from '../../fdraw/components/FDraw'
 import FTools from '../FTools/FTools'
+import getColor from '../../fdraw/services/getColor'
 
 class App extends Component {
   constructor () {
@@ -17,10 +18,16 @@ class App extends Component {
         width: 320,
         height: 200,
         resolution: 300
+      },
+      progress: false,
+      position: {
+        x: 123, y: 456, zoom: 789
       }
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleProgress = this.handleProgress.bind(this)
+    this.handleChangePosition = this.handleChangePosition.bind(this)
   }
 
   get diff () {
@@ -49,6 +56,14 @@ class App extends Component {
     })
   }
 
+  handleProgress (e) {
+    this.setState({ progress: e })
+  }
+
+  handleChangePosition (e) {
+    this.setState({ position: e })
+  }
+
   render() {
     return (
       <div>
@@ -63,13 +78,23 @@ class App extends Component {
             <FTools width={ this.state.tools.width }
                     height={ this.state.tools.height }
                     resolution={ this.state.tools.resolution }
+                    progress={ this.state.progress }
+                    position={ this.state.position }
                     diff={ this.diff }
                     change={ this.handleChange }
                     submit={ this.handleSubmit } />
           </div>
           <FDraw width={ this.state.draw.width }
                  height={ this.state.draw.height }
-                 resolution={ this.state.draw.resolution } />
+                 resolution={ this.state.draw.resolution }
+                 palette={ getColor.wk }
+                 defaultValue={{ zoom: 80 }}
+                 progress={ this.handleProgress }
+                 changePosition={ this.handleChangePosition } />
+          <FDraw width={ 200 }
+                 height={ 200 }
+                 resolution={ 100 }
+                 palette={ getColor.wk } />
         </div>
       </div>
     )
