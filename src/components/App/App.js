@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import FDraw from '../../fdraw/components/FDraw'
+import FChart from '../../fdraw/components/FChart'
 import FTools from '../FTools/FTools'
 import getColor from '../../fdraw/services/getColor'
 
@@ -29,12 +30,14 @@ class App extends Component {
         palette: getColor.bw
       },
       progress: false,
-      position: { x: 0, y: 0, zoom: 1 }
+      position: { x: 0, y: 0, zoom: 1 },
+      stat: []
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleProgress = this.handleProgress.bind(this)
     this.handleChangePosition = this.handleChangePosition.bind(this)
+    this.handleStat = this.handleStat.bind(this)
   }
 
   get diff () {
@@ -79,6 +82,10 @@ class App extends Component {
     this.setState({ position: e })
   }
 
+  handleStat (e) {
+    this.setState({ stat: e })
+  }
+
   componentWillMount () {
     this.handleSubmit()
   }
@@ -111,7 +118,15 @@ class App extends Component {
                  palette={ this.state.draw.palette }
                  defaultValue={{ zoom: 80 }}
                  progress={ this.handleProgress }
-                 changePosition={ this.handleChangePosition } />
+                 changePosition={ this.handleChangePosition }
+                 stat={ this.handleStat } />
+          <div className="vspan-before vspan-after">
+            <FChart stat={ this.state.stat }
+                    width="320"
+                    height="120"
+                    span="0.2"
+                    palette={ this.state.draw.palette } />
+          </div>
           <FDraw width={ 200 }
                  height={ 200 }
                  resolution={ 100 }

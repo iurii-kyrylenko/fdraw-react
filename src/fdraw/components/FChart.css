@@ -1,0 +1,14 @@
+.chart {
+  display: block;
+  background-color: #f0f0f0;
+  border: 1px solid #fff;
+  box-shadow: 1px 1px 4px #ccc;
+}
+.chart rect {
+  cursor: pointer;
+  fill: #5e5e5e;
+}
+.palette {
+  border: 1px solid #fff;
+  box-shadow: 1px 1px 4px #ccc;
+}
