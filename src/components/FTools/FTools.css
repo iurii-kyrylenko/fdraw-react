@@ -30,10 +30,18 @@
 .control .status {
   width: 32px;
 }
+.controls {
+  float: right;
+}
 .error input {
   border: 1px solid #f00;
   outline: none;
 }
 .error label {
   color: #f00;
+}
+.self-clear:after {
+  content: "";
+  clear: both;
+  display: table;
 }

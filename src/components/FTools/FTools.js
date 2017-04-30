@@ -20,7 +20,7 @@ const isFormInvalid = (width, height, resolution) =>
 const FTools = ({ palettes, width, height, resolution, palette, progress, position, diff, change, submit }) => {
   return (
     <div className="ftools">
-      <form className="container" onSubmit={ handleSubmit(submit) }>
+      <form className="container self-clear" onSubmit={ handleSubmit(submit) }>
         <div className={ controlClass(width) }>
           <label htmlFor="width">Width</label>       
           <input id="width" type="text" name="width"
@@ -49,18 +49,18 @@ const FTools = ({ palettes, width, height, resolution, palette, progress, positi
           </div>
         </div>
         <div className="control">
-          <label>Controls</label>
+          <label>Position</label>
+          <div className="info position">
+            <div>x: { position.x },</div>
+            <div>y: { position.y },</div>
+            <div>zoom: { position.zoom }</div>
+          </div>
+        </div>
+        <div className="control controls">
+          <label>Control position</label>
           <div className="info">
             <div>move: click/touch &amp; drag</div>
             <div>zoom: + - / pinch</div>
-          </div>
-        </div>
-        <div className="control">
-          <label>Position</label>
-          <div className="info">
-            <div>x: { position.x }</div>
-            <div>y: { position.y }</div>
-            <div>zoom: { position.zoom }</div>
           </div>
         </div>
         { isFormInvalid(width, height, resolution) || !diff || (

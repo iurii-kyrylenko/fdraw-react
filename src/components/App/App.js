@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
+import github from './github-logo.svg'
+import twitter from './twitter-logo.svg'
 import './App.css'
 import FDraw from '../../fdraw/components/FDraw'
 import FChart from '../../fdraw/components/FChart'
@@ -20,8 +22,8 @@ class App extends Component {
       tools: {
         width: { value: '320', err: false },
         height: { value: '200', err: false },
-        resolution: { value: '200', err: false },
-        palette: 'bw'
+        resolution: { value: '100', err: false },
+        palette: 'wk'
       },
       draw: {
         width: 1,
@@ -93,25 +95,27 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className="App-header">
+        <div className="app-header">
           <h2>
-            <img src={ logo } className="App-logo" alt="logo" />
-            Fractal Explorer
+            <img src={ logo } className="app-logo" alt="logo" />
+            <span>Fractal Explorer</span>
+              <a href="https://twitter.com/iurii_kyrylenko" target="_blank" title="Twitter"><img src={ twitter } alt="twitter" /></a>
+              <a href="https://github.com/iurii-kyrylenko" target="_blank" title="GitHub"><img src={ github } alt="github" /></a>
           </h2>
         </div>
-        <div className="App-body">
-          <div className="vspan-after">
-            <FTools width={ this.state.tools.width }
-                    height={ this.state.tools.height }
-                    resolution={ this.state.tools.resolution }
-                    palettes={ palettes }
-                    palette={ this.state.tools.palette }
-                    progress={ this.state.progress }
-                    position={ this.state.position }
-                    diff={ this.diff }
-                    change={ this.handleChange }
-                    submit={ this.handleSubmit } />
-          </div>
+        <div className="app-body">
+          <div className='app-title'>Tools</div>
+          <FTools width={ this.state.tools.width }
+                  height={ this.state.tools.height }
+                  resolution={ this.state.tools.resolution }
+                  palettes={ palettes }
+                  palette={ this.state.tools.palette }
+                  progress={ this.state.progress }
+                  position={ this.state.position }
+                  diff={ this.diff }
+                  change={ this.handleChange }
+                  submit={ this.handleSubmit } />
+          <div className='app-title'>Controlled properties</div>
           <FDraw width={ this.state.draw.width }
                  height={ this.state.draw.height }
                  resolution={ this.state.draw.resolution }
@@ -120,17 +124,27 @@ class App extends Component {
                  progress={ this.handleProgress }
                  changePosition={ this.handleChangePosition }
                  stat={ this.handleStat } />
-          <div className="vspan-before vspan-after">
-            <FChart stat={ this.state.stat }
-                    width="320"
-                    height="120"
-                    span="0.2"
-                    palette={ this.state.draw.palette } />
-          </div>
-          <FDraw width={ 200 }
-                 height={ 200 }
-                 resolution={ 100 }
+          <div className='app-title'>Escape factor distribution</div>
+          <FChart stat={ this.state.stat }
+                  width="320"
+                  height="120"
+                  span="0.2"
+                  palette={ this.state.draw.palette } />
+          <div className='app-title'>Uncontrolled properties</div>
+          <FDraw width="200"
+                 height="200"
+                 resolution="100"
                  defaultValue={{ x: 0.4025, y: 0.1948, zoom: 266020 }} palette={ getColor.wk } />
+          &nbsp;
+          <FDraw width="320"
+                 height="200"
+                 resolution="300"
+                 defaultValue={{ x: -1.250639199029028, y: 0.020116856497035412, zoom: 897819.3171215057 }} palette={ getColor.rb } />
+          &nbsp;
+          <FDraw width="200"
+                 height="200"
+                 resolution="200"
+                 defaultValue={{ x: -0.6096075864465048, y: 0.4647171747292785, zoom: 1346728.9756822586 }} palette={ getColor.bw } />
         </div>
       </div>
     )
