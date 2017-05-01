@@ -59,8 +59,8 @@ const FTools = ({ palettes, width, height, resolution, palette, progress, positi
         <div className="control controls">
           <label>Control position</label>
           <div className="info">
-            <div>move: click/touch &amp; drag</div>
-            <div>zoom: + - / pinch</div>
+            <div><b>move</b>: press/touch &amp; drag</div>
+            <div><b>zoom</b>: + - / pinch</div>
           </div>
         </div>
         { isFormInvalid(width, height, resolution) || !diff || (

@@ -115,7 +115,7 @@ class App extends Component {
                   diff={ this.diff }
                   change={ this.handleChange }
                   submit={ this.handleSubmit } />
-          <div className='app-title'>Controlled properties</div>
+          <div className='app-title'>Controlled parameters:</div>
           <FDraw width={ this.state.draw.width }
                  height={ this.state.draw.height }
                  resolution={ this.state.draw.resolution }
@@ -124,13 +124,13 @@ class App extends Component {
                  progress={ this.handleProgress }
                  changePosition={ this.handleChangePosition }
                  stat={ this.handleStat } />
-          <div className='app-title'>Escape factor distribution</div>
+          <div className='app-title'>Spectrum (escape factor distribution):</div>
           <FChart stat={ this.state.stat }
                   width="320"
                   height="120"
                   span="0.2"
                   palette={ this.state.draw.palette } />
-          <div className='app-title'>Uncontrolled properties</div>
+          <div className='app-title'>Fixed parameters (you can still change position):</div>
           <FDraw width="200"
                  height="200"
                  resolution="100"
