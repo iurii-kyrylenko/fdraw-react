@@ -12,7 +12,8 @@ const palettes = [
   { id: 'bw', name: 'b & w' },
   { id: 'wb', name: 'w & b' },
   { id: 'rb', name: 'rainbow' },
-  { id: 'wk', name: 'wiki' }
+  { id: 'wk', name: 'wiki' },
+  { id: 'wp', name: 'wiki-plus' }
 ]
 
 class App extends Component {
