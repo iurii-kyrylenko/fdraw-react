@@ -7,6 +7,30 @@ import FDraw from '../../fdraw/components/FDraw'
 import FChart from '../../fdraw/components/FChart'
 import FTools from '../FTools/FTools'
 import getColor from '../../fdraw/services/getColor'
+import GradientBuilder from '../../gradient/GradientBuilder/GradientBuilder'
+
+const rgbToHex = (r, g, b) =>
+  '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+
+const hexToRgb = (hex) => {
+  // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+  const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+  hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b)
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+  } : null
+}
+
+const GradientBuilderRGB = ({ defaultValue, onSubmit, ...rest }) =>
+  <GradientBuilder {...{
+    defaultValue: !defaultValue ? undefined :
+                  defaultValue.map(({ h, r, g, b }) => ({ pos: h, color: rgbToHex(r, g, b) })),
+    onSubmit: p => onSubmit(p.map(({ pos, color }) => ({ h: pos, ...hexToRgb(color) }))),
+    ...rest
+  }} />
 
 const palettes = [
   { id: 'bw', name: 'b & w' },
@@ -41,6 +65,7 @@ class App extends Component {
     this.handleProgress = this.handleProgress.bind(this)
     this.handleChangePosition = this.handleChangePosition.bind(this)
     this.handleStat = this.handleStat.bind(this)
+    this.handleChangePalette = this.handleChangePalette.bind(this)
   }
 
   get diff () {
@@ -89,6 +114,12 @@ class App extends Component {
     this.setState({ stat: e })
   }
 
+  handleChangePalette (e) {
+    this.setState(s => {
+      s.draw = { ...s.draw, palette: e}
+    })
+  }
+
   componentWillMount () {
     this.handleSubmit()
   }
@@ -130,7 +161,13 @@ class App extends Component {
                   width="320"
                   height="120"
                   span="0.2"
-                  palette={ this.state.draw.palette } />
+                  palette={ this.state.draw.palette }
+                  changePalette={ this.handleChangePalette } />
+          <GradientBuilderRGB {...{
+            width: 320,
+            defaultValue: this.state.draw.palette,
+            onSubmit: this.handleChangePalette
+          }} />
           <div className='app-title'>Fixed parameters (you can still change position):</div>
           <FDraw width="200"
                  height="200"
