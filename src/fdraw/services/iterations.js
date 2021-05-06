@@ -29,7 +29,24 @@ const mandelbrot = (c, maxIter) => {
   return maxIter
 }
 
+const mdb = (c, maxIter) => {
+  let z = { x: 0, y: 0 }
+  for (let i = 0; i < maxIter; i++) {
+    const zz = {
+      x: z.x * z.x - z.y * z.y + c.x,
+      y: 2 * z.x * z.y + c.y
+    }
+    const mz = zz.x * zz.x + zz.y * zz.y
+    if (mz > 4) {
+      return i
+    }
+    z = zz
+  }
+  return maxIter - 1
+}
+
 export default {
   colorPalette,
-  mandelbrot
+  mandelbrot,
+  mdb
 }
