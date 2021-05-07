@@ -131,7 +131,7 @@ class App extends Component {
                   height="120"
                   span="0.2"
                   palette={ this.state.draw.palette } />
-          {/* <div className='app-title'>Fixed parameters (you can still change position):</div>
+          <div className='app-title'>Fixed parameters (you can still change position):</div>
           <FDraw width="200"
                  height="200"
                  resolution="100"
@@ -145,7 +145,7 @@ class App extends Component {
           <FDraw width="200"
                  height="200"
                  resolution="200"
-                 defaultValue={{ x: -0.6096075864465048, y: 0.4647171747292785, zoom: 1346728.9756822586 }} palette={ getColor.bw } /> */}
+                 defaultValue={{ x: -0.6096075864465048, y: 0.4647171747292785, zoom: 1346728.9756822586 }} palette={ getColor.bw } />
         </div>
       </div>
     )
